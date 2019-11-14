@@ -5,6 +5,7 @@ import { throwError, Observable } from 'rxjs';
 import { Projeto } from '../model/projeto';
 import {retry, catchError} from 'rxjs/operators'
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,4 +25,11 @@ export class ProjetoApiService {
     return this.httpClient.get<Projeto[]>(this.apiUrl)
                           .pipe(retry(1), catchError(this.handleError))
   }
+
+  createProjeto(projeto: Projeto): Observable<Projeto>
+   {
+    return this.httpClient.post<Projeto>(this.apiUrl, projeto)
+    .pipe(retry(1), catchError(this.handleError));
+  }
+  
 }
